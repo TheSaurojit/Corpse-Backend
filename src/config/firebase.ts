@@ -1,10 +1,13 @@
 import admin from "firebase-admin";
-import path from "path";
+import { ENV } from "./env";
 
-const serviceAccount = require(path.resolve("serviceAccountKey.json"));
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert({
+    "clientEmail": ENV.FIREBASE_CLIENT_EMAIL,
+    "privateKey": ENV.FIREBASE_PRIVATE_KEY,
+    "projectId": ENV.FIREBASE_PROJECT_ID,
+  }),
 });
 
 export const db = admin.firestore();
